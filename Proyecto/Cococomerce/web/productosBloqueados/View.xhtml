@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewProductosBloqueadosTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewProductosBloqueadosLabel_idProducto}"/>
+                    <h:outputText value="#{productosBloqueadosController.selected.idProducto}" title="#{bundle.ViewProductosBloqueadosTitle_idProducto}"/>
+                    <h:outputText value="#{bundle.ViewProductosBloqueadosLabel_idUsuario}"/>
+                    <h:outputText value="#{productosBloqueadosController.selected.idUsuario}" title="#{bundle.ViewProductosBloqueadosTitle_idUsuario}"/>
+                    <h:outputText value="#{bundle.ViewProductosBloqueadosLabel_descripcionBloqueo}"/>
+                    <h:outputText value="#{productosBloqueadosController.selected.descripcionBloqueo}" title="#{bundle.ViewProductosBloqueadosTitle_descripcionBloqueo}"/>
+                    <h:outputText value="#{bundle.ViewProductosBloqueadosLabel_fechaBloqueo}"/>
+                    <h:outputText value="#{productosBloqueadosController.selected.fechaBloqueo}" title="#{bundle.ViewProductosBloqueadosTitle_fechaBloqueo}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewProductosBloqueadosLabel_idBloqueo}"/>
+                    <h:outputText value="#{productosBloqueadosController.selected.idBloqueo}" title="#{bundle.ViewProductosBloqueadosTitle_idBloqueo}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{productosBloqueadosController.destroyAndView}" value="#{bundle.ViewProductosBloqueadosDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewProductosBloqueadosEditLink}"/>
+                <br />
+                <h:commandLink action="#{productosBloqueadosController.prepareCreate}" value="#{bundle.ViewProductosBloqueadosCreateLink}" />
+                <br />
+                <h:commandLink action="#{productosBloqueadosController.prepareList}" value="#{bundle.ViewProductosBloqueadosShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewProductosBloqueadosIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

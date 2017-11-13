@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 13, 2017 1:54:07 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="cocomarket" name="models.Mensaje" optimistic-lock="version" table="mensaje">
+    <id name="idMensaje" type="java.lang.Integer">
+      <column name="id_mensaje"/>
+      <generator class="identity"/>
+    </id>
+    <property name="idDonante" type="int">
+      <column name="id_donante" not-null="true"/>
+    </property>
+    <property name="idSolicitante" type="int">
+      <column name="id_solicitante" not-null="true"/>
+    </property>
+    <property name="mensaje" type="string">
+      <column length="65535" name="mensaje" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>

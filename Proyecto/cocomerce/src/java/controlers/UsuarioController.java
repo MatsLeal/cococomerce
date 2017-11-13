@@ -41,8 +41,9 @@ public class UsuarioController {
             user = userDAO.login(this.user);
             
             if(user!=null){
+                this.user=user;
                 FacesContext.getCurrentInstance().getExternalContext()
-                        .getSessionMap().put("usuario", user);
+                        .getSessionMap().put("user", user);
                 return "home";
             }
             
@@ -53,5 +54,24 @@ public class UsuarioController {
         
         return "index";
     }
+    
+    public Boolean isLogged(){
+        
+        if(FacesContext.getCurrentInstance().getExternalContext()
+                .getSessionMap().get("user") == null
+                ){
+            return false;
+                    }
+        
+        return true;
+    }
+
+
+    public String logOut(){
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        
+        return "index?faces-redirect=true";
+    }
+
     
 }

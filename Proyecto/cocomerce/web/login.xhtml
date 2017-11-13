@@ -19,10 +19,10 @@
             <h:panelGrid    columns="2">
                 
                 <h:outputLabel value="Correo"/>
-                <h:inputText value="#{usuarioController.user.correo}" />
+                <h:inputText value="#{usuarioController.user.correo}" required="true" />
                 
                 <h:outputLabel value="Clave"/>
-                <h:inputText value="#{usuarioController.user.clave}" />
+                <h:inputText value="#{usuarioController.user.clave}" required="true"/>
                 
                 <h:commandButton value="Inicar Sesion" action="#{usuarioController.login()}"/>
                     

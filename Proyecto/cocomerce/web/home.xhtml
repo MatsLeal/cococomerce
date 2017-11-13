@@ -5,10 +5,16 @@
     <h:head>
         <title>Home</title>
     </h:head>
-    <h:body>
+    <h:body >
+        
+          
+        <h:form rendered="#{usuarioController.isLogged()}"> 
            Welcome home !!
-           
            <h:outputLabel  value="#{usuarioController.user.usuario}" />
+           <br/>
+           <h:commandButton value="Cerrar sesion" action="#{usuarioController.logOut()}"/>
            
+           
+       </h:form>    
     </h:body>
 </html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditProductoPedidoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditProductoPedidoLabel_idPedido}" for="idPedido" />
+                    <h:inputText id="idPedido" value="#{productoPedidoController.selected.idPedido}" title="#{bundle.EditProductoPedidoTitle_idPedido}" required="true" requiredMessage="#{bundle.EditProductoPedidoRequiredMessage_idPedido}"/>
+                    <h:outputLabel value="#{bundle.EditProductoPedidoLabel_idDonante}" for="idDonante" />
+                    <h:inputText id="idDonante" value="#{productoPedidoController.selected.idDonante}" title="#{bundle.EditProductoPedidoTitle_idDonante}" required="true" requiredMessage="#{bundle.EditProductoPedidoRequiredMessage_idDonante}"/>
+                    <h:outputLabel value="#{bundle.EditProductoPedidoLabel_idSolicitante}" for="idSolicitante" />
+                    <h:inputText id="idSolicitante" value="#{productoPedidoController.selected.idSolicitante}" title="#{bundle.EditProductoPedidoTitle_idSolicitante}" required="true" requiredMessage="#{bundle.EditProductoPedidoRequiredMessage_idSolicitante}"/>
+                    <h:outputLabel value="#{bundle.EditProductoPedidoLabel_ganador}" for="ganador" />
+                    <h:inputText id="ganador" value="#{productoPedidoController.selected.ganador}" title="#{bundle.EditProductoPedidoTitle_ganador}" required="true" requiredMessage="#{bundle.EditProductoPedidoRequiredMessage_ganador}"/>
+                    <h:outputLabel value="#{bundle.EditProductoPedidoLabel_fechaPedido}" for="fechaPedido" />
+                    <h:inputText id="fechaPedido" value="#{productoPedidoController.selected.fechaPedido}" title="#{bundle.EditProductoPedidoTitle_fechaPedido}" required="true" requiredMessage="#{bundle.EditProductoPedidoRequiredMessage_fechaPedido}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditProductoPedidoLabel_idProducto}" for="idProducto" />
+                    <h:inputText id="idProducto" value="#{productoPedidoController.selected.idProducto}" title="#{bundle.EditProductoPedidoTitle_idProducto}" required="true" requiredMessage="#{bundle.EditProductoPedidoRequiredMessage_idProducto}"/>
+                </h:panelGrid>
+                <h:commandLink action="#{productoPedidoController.update}" value="#{bundle.EditProductoPedidoSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditProductoPedidoViewLink}"/>
+                <br />
+                <h:commandLink action="#{productoPedidoController.prepareList}" value="#{bundle.EditProductoPedidoShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditProductoPedidoIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateDonacionesTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateDonacionesLabel_idDonador}" for="idDonador" />
+                    <h:inputText id="idDonador" value="#{donacionesController.selected.idDonador}" title="#{bundle.CreateDonacionesTitle_idDonador}" required="true" requiredMessage="#{bundle.CreateDonacionesRequiredMessage_idDonador}"/>
+                    <h:outputLabel value="#{bundle.CreateDonacionesLabel_idBeneficiado}" for="idBeneficiado" />
+                    <h:inputText id="idBeneficiado" value="#{donacionesController.selected.idBeneficiado}" title="#{bundle.CreateDonacionesTitle_idBeneficiado}" required="true" requiredMessage="#{bundle.CreateDonacionesRequiredMessage_idBeneficiado}"/>
+                    <h:outputLabel value="#{bundle.CreateDonacionesLabel_horaDonacion}" for="horaDonacion" />
+                    <h:inputText id="horaDonacion" value="#{donacionesController.selected.horaDonacion}" title="#{bundle.CreateDonacionesTitle_horaDonacion}" required="true" requiredMessage="#{bundle.CreateDonacionesRequiredMessage_horaDonacion}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateDonacionesLabel_idProducto}" for="idProducto" />
+                    <h:inputText id="idProducto" value="#{donacionesController.selected.idProducto}" title="#{bundle.CreateDonacionesTitle_idProducto}" required="true" requiredMessage="#{bundle.CreateDonacionesRequiredMessage_idProducto}"/>
+                    <h:outputLabel value="#{bundle.CreateDonacionesLabel_idDonacion}" for="idDonacion" />
+                    <h:inputText id="idDonacion" value="#{donacionesController.selected.idDonacion}" title="#{bundle.CreateDonacionesTitle_idDonacion}" required="true" requiredMessage="#{bundle.CreateDonacionesRequiredMessage_idDonacion}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{donacionesController.create}" value="#{bundle.CreateDonacionesSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{donacionesController.prepareList}" value="#{bundle.CreateDonacionesShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateDonacionesIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -8,6 +8,7 @@ package dao;
 import cococomerce.HibernateUtil;
 import java.util.List;
 import models.Usuario;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -21,6 +22,29 @@ public class UsuarioDAO {
 
     public UsuarioDAO() {
         this.session = HibernateUtil.getSessionFactory().getCurrentSession();
+    }
+    
+    
+    public Usuario register(Usuario incoming){
+        
+        org.hibernate.Transaction transaction= session.beginTransaction();
+
+        try {
+         
+         incoming.setId( (Integer) session.save(incoming));  
+         transaction.commit();
+         return incoming;
+         
+      } catch (HibernateException e) {
+         if (transaction!=null) transaction.rollback();
+         e.printStackTrace(); 
+      } 
+        
+       return null; 
+        
+        
+                
+        
     }
     
     public List getUsers(){

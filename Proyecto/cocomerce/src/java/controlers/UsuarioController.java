@@ -21,13 +21,37 @@ import models.Usuario;
 public class UsuarioController {
     
     private Usuario user= new Usuario();
+    private String confirm;
 
-    public Usuario getUser() {
-        return user;
-    }
-
-    public void setUser(Usuario user) {
-        this.user = user;
+  
+    
+    public String register(){
+        
+        if(!confirm.equals(user.getClave())){
+            return "registro";
+        }
+        
+        UsuarioDAO userDAO= new UsuarioDAO();
+        Usuario pendinguser;
+        
+        pendinguser = userDAO.register(this.user);
+        
+        if(pendinguser==null)
+        {
+            return "registro";
+        }
+        
+        this.user= pendinguser;
+        
+        FacesContext.getCurrentInstance().getExternalContext()
+                        .getSessionMap().put("user", user);
+         
+        return "home";
+            
+        
+        
+        
+        
     }
     
     
@@ -72,6 +96,30 @@ public class UsuarioController {
         
         return "index?faces-redirect=true";
     }
+    
+    public Boolean isGuest(){
+        return !isLogged();
+    }
 
+    
+    
+    
+      public String getConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(String confirm) {
+        this.confirm = confirm;
+    }
+    
+    
+
+    public Usuario getUser() {
+        return user;
+    }
+
+    public void setUser(Usuario user) {
+        this.user = user;
+    }
     
 }

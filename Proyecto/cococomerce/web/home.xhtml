@@ -6,7 +6,13 @@
         <title>Home</title>
     </h:head>
     <h:body>
+        <h:form rendered="#{usuarioController.isLogged()}">
+            
         Hello <h:outputLabel value="#{usuarioController.selected.usuario}" />
+        
+        <h:commandButton action="#{usuarioController.logout()}" value="Cerrar sesion"/>
+        
+        </h:form>
     </h:body>
 </html>
 

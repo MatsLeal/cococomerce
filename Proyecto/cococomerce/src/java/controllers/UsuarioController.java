@@ -65,6 +65,28 @@ public class UsuarioController implements Serializable {
     }
     
     
+    public String logout(){
+        current=null;
+        FacesContext.getCurrentInstance().getExternalContext()
+                .getSessionMap().clear();
+        
+        return "/login";
+    }
+    
+    
+    
+    
+    public Boolean isLogged(){
+        //Si current(Usuario) es nulo, no hay sesion iniciada
+        if(current==null){
+            return false;
+        }
+        return true;
+    }
+    
+    
+    
+    
     
     
     

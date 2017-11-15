@@ -16,6 +16,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.persistence.TypedQuery;
 import jpa.entities.Usuario;
 
 @Named("usuarioController")
@@ -24,6 +25,7 @@ public class UsuarioController implements Serializable {
 
     private Usuario current;
     private DataModel items = null;
+    
     @EJB
     private facade.UsuarioFacade ejbFacade;
     private PaginationHelper pagination;
@@ -32,19 +34,34 @@ public class UsuarioController implements Serializable {
     
     public String login(){
         
-        Usuario user= new Usuario();
-        
-        current=user.login(current);
-        
-        if(current==null){
-            return "login";
-        }
-        
-        return "home";
-        
-        
-        
+            
+            //Crea una instancia de un Query del tipo Usaurio, ese query es el de login
+            TypedQuery<Usuario> query = this.ejbFacade.getEm().createNamedQuery("Usuario.login",Usuario.class);
+            
+            //Asigna los parametros al query
+            query.setParameter("correo", current.getCorreo());
+            query.setParameter("clave", current.getClave());
+            
+            //Obten el resultado del query, que al ser de tipo usuario, se puede almacenar en current (tipo Usuario)
+            current=query.getSingleResult();
+            
+            //Si current (usuario) es nulo, no se enccontro el usuario, retorna al login
+            if(current==null){
+                return "login";
+            }
+            
+            
+            //De otro modo, guarda el objeto en la sesion actual
+            FacesContext.getCurrentInstance().getExternalContext()
+                    .getSessionMap().put("user", current);
+            
+            
+            //Redireciona a home !
+            return "home";
+            
     }
+    
+    
     
     
     
@@ -204,7 +221,9 @@ public class UsuarioController implements Serializable {
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
+        
         return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {

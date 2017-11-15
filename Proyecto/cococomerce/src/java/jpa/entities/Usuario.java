@@ -5,8 +5,8 @@
  */
 package jpa.entities;
 
+import facade.UsuarioFacade;
 import java.io.Serializable;
-import javax.ejb.EJB;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,15 +30,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "usuario")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
+      @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
     , @NamedQuery(name = "Usuario.findById", query = "SELECT u FROM Usuario u WHERE u.id = :id")
     , @NamedQuery(name = "Usuario.findByUsuario", query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario")
     , @NamedQuery(name = "Usuario.findByClave", query = "SELECT u FROM Usuario u WHERE u.clave = :clave")
-    , @NamedQuery(name = "Usuario.findByCorreo", query = "SELECT u FROM Usuario u WHERE u.correo = :correo")})
+    , @NamedQuery(name = "Usuario.findByCorreo", query = "SELECT u FROM Usuario u WHERE u.correo = :correo")
+    , @NamedQuery(name = "Usuario.login", query="SELECT u  FROM Usuario u WHERE u.correo= :correo AND u.clave= :clave" )
+})
 public class Usuario implements Serializable {
     
-    @EJB
-    private facade.UsuarioFacade ejbFacade;
+    
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,29 +62,32 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "correo")
     private String correo;
+    
+    //private UsuarioFacade uf;
 
     public Usuario() {
+    //    uf= new UsuarioFacade();
     }
     
-    public EntityManager getem(){
-        return this.ejbFacade.getEm();
-    }
+//    public EntityManager getem(){
+//        return this.uf.getEm();
+//    }
     
     
-    public Usuario login(Usuario atempt){
-        Usuario u=null;
-        
-        
-        TypedQuery<Usuario> query = getem().createQuery("Select *  from usuario where correo=:correo and clave=:clave;",Usuario.class);
-        
-        query.setParameter("correo", atempt.correo);
-        query.setParameter("clave", atempt.clave);
-        
-        u=query.getSingleResult();
-        
-            return u;
-        
-    }
+//    public Usuario login(Usuario atempt){
+//        Usuario u=null;
+//        
+//        
+//        TypedQuery<Usuario> query = getem().createQuery("Select *  from usuario where correo=:correo and clave=:clave;",Usuario.class);
+//        
+//        query.setParameter("correo", atempt.correo);
+//        query.setParameter("clave", atempt.clave);
+//        
+//        u=query.getSingleResult();
+//        
+//            return u;
+//        
+//    }
     
     
 

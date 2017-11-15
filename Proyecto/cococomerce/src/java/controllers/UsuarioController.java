@@ -23,6 +23,7 @@ import jpa.entities.Usuario;
 @SessionScoped
 public class UsuarioController implements Serializable {
 
+    
     private Usuario current;
     private DataModel items = null;
     
@@ -31,6 +32,8 @@ public class UsuarioController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
+    
+    
     
     public String login(){
         
@@ -47,7 +50,7 @@ public class UsuarioController implements Serializable {
             
             //Si current (usuario) es nulo, no se enccontro el usuario, retorna al login
             if(current==null){
-                return "login";
+                return "/login";
             }
             
             
@@ -57,7 +60,7 @@ public class UsuarioController implements Serializable {
             
             
             //Redireciona a home !
-            return "home";
+            return "/home";
             
     }
     
@@ -120,14 +123,24 @@ public class UsuarioController implements Serializable {
     }
 
     public String create() {
-        try {
+
+            
+            //Creamos el usuario
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UsuarioCreated"));
-            return prepareCreate();
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            return null;
-        }
+            
+            if(current==null){
+                
+                JsfUtil.addErrorMessage("No se pudo registrar !");
+                
+                return "registro";
+                
+            }
+            
+            
+            //Inicia la sesion del usuario 
+            return this.login();
+
+        
     }
 
     public String prepareEdit() {
@@ -233,6 +246,10 @@ public class UsuarioController implements Serializable {
     public Usuario getUsuario(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
+
+    
+    
+    
 
     @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {

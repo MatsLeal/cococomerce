@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        Chat
+        <br/>
+        <h:form>
+            <h:selectOneMenu value="#{chat.destino}" onchange="submit()"
+		valueChangeListener="#{chat.ConversacionChanged}">
+                <f:selectItems value="#{chat.countryInMap}"/>
+            </h:selectOneMenu>
+            <br/>
+            <h:outputLabel value="#{chat.conversacion}" escape="false" />
+            <br/>
+            <h:inputText id="mensaje" value="#{chat.nvomsj}"/>
+            <h:commandButton action="#{chat.mostrar()}" value="Enviar Mensaje" onclick="location.reload();"/>
+        </h:form>    
+    </h:body>
+</html>
+

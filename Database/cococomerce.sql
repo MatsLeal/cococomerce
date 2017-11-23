@@ -149,11 +149,7 @@ INSERT INTO `conversacion` (`id_conversacion`, `id_destinatario`, `id_remitente`
 -- Estructura de tabla para la tabla `mensaje`
 --
 
-CREATE TABLE `mensaje` (
-  `id_msg` int(11) NOT NULL,
-  `id_conversacion` int(11) NOT NULL,
-  `mensaje` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 
 --
 -- Volcado de datos para la tabla `mensaje`
@@ -218,9 +214,7 @@ ALTER TABLE `conversacion`
 
 --
 -- Indices de la tabla `mensaje`
---
-ALTER TABLE `mensaje`
-  ADD PRIMARY KEY (`id_msg`);
+
 
 --
 -- Indices de la tabla `usuarios`
@@ -240,8 +234,6 @@ ALTER TABLE `conversacion`
 --
 -- AUTO_INCREMENT de la tabla `mensaje`
 --
-ALTER TABLE `mensaje`
-  MODIFY `id_msg` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 
 

@@ -146,10 +146,6 @@ INSERT INTO `conversacion` (`id_conversacion`, `id_destinatario`, `id_remitente`
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `mensaje`
---
-
-
 
 --
 -- Volcado de datos para la tabla `mensaje`

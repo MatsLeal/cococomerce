@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import jpa.entities.Usuario;
 
@@ -34,9 +35,13 @@ public class ChatController {
     private String conversacion = ""; //CONVERSACION A MOSTRAR
     private String nvomsj = ""; //NUEVO MENSAJE A ENVIAR
     private int id_conv;
+    String contacto;
     
     public ChatController() {
-        user.setId(1); //CAMBIAR AL INTEGRAR PROYECTO
+         Usuario u = (Usuario)   FacesContext.getCurrentInstance().getExternalContext()
+                .getSessionMap().get("user");
+          
+        user.setId(u.getId());
     }
 
     public Usuario getUser() {
@@ -122,20 +127,13 @@ public class ChatController {
      * @param e VALOR SELECCIONADO DEL COMBOX
      */
          public void ConversacionChanged(ValueChangeEvent e){
-		//assign new value to localeCode
-                
-                String contacto = e.getNewValue().toString();
+                 contacto = e.getNewValue().toString();
                 String aux = "";
+                
                 Connection con1 = con.Conectar();
                  try{
-             PreparedStatement ps = con1.prepareStatement("select id_conversacion from conversacion where id_destinatario = " + contacto + " and id_remitente = "+ user.getId());
-           ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                id_conv = rs.getInt("id_conversacion");
-            }         
-            
-            ps = con1.prepareStatement("Select mensaje from mensaje inner join conversacion on conversacion.id_destinatario = " + contacto + " and conversacion.id_remitente = "+ user.getId() + " and conversacion.id_conversacion = mensaje.id_conversacion");
-            rs = ps.executeQuery();
+            PreparedStatement ps = con1.prepareStatement("Select mensaje from mensaje where id_solicitante = " + contacto + " and id_donante = "+ user.getId());
+            ResultSet rs = ps.executeQuery();
            
             while(rs.next()){
                 aux = aux + "<br/>"+ rs.getString("mensaje") ;
@@ -151,11 +149,11 @@ public class ChatController {
          * FUNCION QUE INSERTA MENSAJE EN LA BASE
          */
          public void mostrar(){
-            Connection con1 = con.Conectar();
+                        Connection con1 = con.Conectar();
             PreparedStatement ps; 
             
         try {
-            ps = con1.prepareStatement("insert into mensaje (id_conversacion, mensaje) values ( " + id_conv + ",'" + nvomsj + "')");
+            ps = con1.prepareStatement("insert into mensaje (id_donante, id_solicitante, mensaje) values ( " + user.getId() + "," + contacto + ",'" + nvomsj + "')");
             ps.executeUpdate();
             nvomsj = "";
             

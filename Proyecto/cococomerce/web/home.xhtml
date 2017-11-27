@@ -9,6 +9,7 @@
         <h:form rendered="#{usuarioController.isLogged()}">
             
         Hello <h:outputLabel value="#{usuarioController.selected.usuario}" />
+        <h:commandButton value="Mensajes" action="/chat"/>
         
         <h:commandButton action="#{usuarioController.logout()}" value="Cerrar sesion"/>
         

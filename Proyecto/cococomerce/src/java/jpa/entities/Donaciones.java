@@ -35,7 +35,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Donaciones.findByHoraDonacion", query = "SELECT d FROM Donaciones d WHERE d.horaDonacion = :horaDonacion")
     , @NamedQuery(name = "Donaciones.findByIdProducto", query = "SELECT d FROM Donaciones d WHERE d.idProducto = :idProducto")
     , @NamedQuery(name = "Donaciones.findByIdDonacion", query = "SELECT d FROM Donaciones d WHERE d.idDonacion = :idDonacion")
-    , @NamedQuery(name = "Donaciones.ganador", query = "update Donaciones where id= :iddonacion set ganador=:idganador ")
 }
     
 )

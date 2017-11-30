@@ -30,7 +30,7 @@ public class ConexionSQL {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             try {
-               con= DriverManager.getConnection("jdbc:mysql://localhost/coquito", "root", "");
+               con= DriverManager.getConnection("jdbc:mysql://localhost/cocomarket", "root", "123456");
             } catch (SQLException e) {
                 
             }

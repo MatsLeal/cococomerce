@@ -1,12 +1,15 @@
 package controllers;
 
+import facade.ProductosFacade;
 import jpa.entities.util.JsfUtil;
 import jpa.entities.util.PaginationHelper;
 import facade.UsuarioFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
+import javax.enterprise.context.Dependent;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -16,7 +19,9 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import jpa.entities.Productos;
 import jpa.entities.Usuario;
 
 @Named("usuarioController")
@@ -24,13 +29,49 @@ import jpa.entities.Usuario;
 public class UsuarioController implements Serializable {
 
     
+    public Usuario getUser(){
+            
+        
+            return  (Usuario) FacesContext.getCurrentInstance().getExternalContext()
+                .getSessionMap().get("user");
+    
+    }
+    
+    public List<Productos> getProductosusuario() {
+        
+         if (FacesContext.getCurrentInstance().getRenderResponse()) {
+            this.setProductosusuario();// Reload to get most recent data.
+        }
+       
+        return productosusuario;
+    }
+
+    public void setProductosusuario() {
+    
+        
+        TypedQuery<Productos> query = this.productosejbFacade.getEm().createNamedQuery("Productos.findByUsuarioOfertor",Productos.class);
+        
+        query.setParameter("usuarioOfertor", getUser().getId().toString());
+        
+        this.productosusuario = query.getResultList(); 
+        
+        
+    }
+
+    
+    private List<Productos> productosusuario;
+    
     private Usuario current;
     private DataModel items = null;
     
     @EJB
     private facade.UsuarioFacade ejbFacade;
+    @EJB
+    private facade.ProductosFacade productosejbFacade;
+    
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    
 
     
     
@@ -62,6 +103,15 @@ public class UsuarioController implements Serializable {
             //Redireciona a home !
             return "/home";
             
+    }
+
+    public String productos(){
+        
+        this.setProductosusuario();
+        
+        return "/usuario/productos";
+        
+        
     }
     
     

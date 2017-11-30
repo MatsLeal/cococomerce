@@ -3,12 +3,19 @@ package controllers;
 import jpa.entities.util.JsfUtil;
 import jpa.entities.util.PaginationHelper;
 import facade.ProductosFacade;
+import java.io.IOException;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -17,6 +24,9 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import jpa.entities.Productos;
+
+
+import org.primefaces.model.UploadedFile;
 
 @Named("productosController")
 @SessionScoped
@@ -28,9 +38,70 @@ public class ProductosController implements Serializable {
     private facade.ProductosFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    
+    
+    private ConexionSQL con = new ConexionSQL(); //CONEXION A LA BASE
+    
+    
+    private UploadedFile imagen;
 
-    public ProductosController() {
+    public UploadedFile getImagen() {
+        return imagen;
     }
+
+    public void setImagen(UploadedFile imagen) {
+        this.imagen = imagen;
+    }
+    
+    
+    
+    
+    
+    public String save(Integer iduser){
+        
+        
+        Connection conn = con.Conectar();
+        
+        String sql=" INSERT INTO productos (nombre,descripcion,indiceimagen,bloqueada,fecha_update_producto,usuario_ofertor) values (?,?,?,0,CURDATE(),?) ";
+        
+        
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            
+            stmt.setString(1, this.current.getNombre());
+            
+            stmt.setString(2, this.current.getDescripcion());
+            
+            stmt.setBinaryStream(3, this.imagen.getInputstream());
+            
+            stmt.setInt(4,iduser);
+            
+            stmt.executeUpdate();
+            
+            
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Upload success", imagen.getFileName() + " is uploaded.");  
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
+        return "";
+    }
+
+    
+    
+    public ProductosController() {
+        
+    }
+    
+    
 
     public Productos getSelected() {
         if (current == null) {

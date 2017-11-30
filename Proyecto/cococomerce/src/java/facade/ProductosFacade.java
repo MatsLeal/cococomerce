@@ -17,8 +17,15 @@ import jpa.entities.Productos;
 @Stateless
 public class ProductosFacade extends AbstractFacade<Productos> {
 
+    
     @PersistenceContext(unitName = "cococomercePU")
     private EntityManager em;
+    
+    public EntityManager getEm(){
+    
+        
+       return em;
+    } 
 
     @Override
     protected EntityManager getEntityManager() {
@@ -27,6 +34,11 @@ public class ProductosFacade extends AbstractFacade<Productos> {
 
     public ProductosFacade() {
         super(Productos.class);
+        
+        
     }
+    
+    
+    
     
 }

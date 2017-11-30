@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -13,33 +15,35 @@
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
-            <h:form>
+            <h:form enctype="multipart/form-data">
+                
+                 <p:messages showDetail="true" />
+                 
+                 
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateProductosLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{productosController.selected.id}" title="#{bundle.CreateProductosTitle_id}" required="true" requiredMessage="#{bundle.CreateProductosRequiredMessage_id}"/>
+                    
                     <h:outputLabel value="#{bundle.CreateProductosLabel_nombre}" for="nombre" />
                     <h:inputText id="nombre" value="#{productosController.selected.nombre}" title="#{bundle.CreateProductosTitle_nombre}" required="true" requiredMessage="#{bundle.CreateProductosRequiredMessage_nombre}"/>
+                    
                     <h:outputLabel value="#{bundle.CreateProductosLabel_descripcion}" for="descripcion" />
                     <h:inputTextarea rows="4" cols="30" id="descripcion" value="#{productosController.selected.descripcion}" title="#{bundle.CreateProductosTitle_descripcion}" required="true" requiredMessage="#{bundle.CreateProductosRequiredMessage_descripcion}"/>
-                    <h:outputLabel value="#{bundle.CreateProductosLabel_indiceimagen}" for="indiceimagen" />
-                    <h:inputTextarea rows="4" cols="30" id="indiceimagen" value="#{productosController.selected.indiceimagen}" title="#{bundle.CreateProductosTitle_indiceimagen}" required="true" requiredMessage="#{bundle.CreateProductosRequiredMessage_indiceimagen}"/>
-                    <h:outputLabel value="#{bundle.CreateProductosLabel_bloqueada}" for="bloqueada" />
-                    <h:inputText id="bloqueada" value="#{productosController.selected.bloqueada}" title="#{bundle.CreateProductosTitle_bloqueada}" required="true" requiredMessage="#{bundle.CreateProductosRequiredMessage_bloqueada}"/>
-                    <h:outputLabel value="#{bundle.CreateProductosLabel_fechaUpdateProducto}" for="fechaUpdateProducto" />
-                    <h:inputText id="fechaUpdateProducto" value="#{productosController.selected.fechaUpdateProducto}" title="#{bundle.CreateProductosTitle_fechaUpdateProducto}" required="true" requiredMessage="#{bundle.CreateProductosRequiredMessage_fechaUpdateProducto}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.CreateProductosLabel_usuarioOfertor}" for="usuarioOfertor" />
-                    <h:inputText id="usuarioOfertor" value="#{productosController.selected.usuarioOfertor}" title="#{bundle.CreateProductosTitle_usuarioOfertor}" required="true" requiredMessage="#{bundle.CreateProductosRequiredMessage_usuarioOfertor}"/>
+                    
+                    
+                    <p:fileUpload value="#{productosController.imagen}" mode="simple" />
+ 
+                      <p:commandButton value="Submit" ajax="false" actionListener="#{productosController.save(usuarioController.selected.id)}" />
+                    
+                    
+                    
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{productosController.create}" value="#{bundle.CreateProductosSaveLink}" />
+                
                 <br />
                 <br />
                 <h:commandLink action="#{productosController.prepareList}" value="#{bundle.CreateProductosShowAllLink}" immediate="true"/>
                 <br />
                 <br />
-                <h:link outcome="/index" value="#{bundle.CreateProductosIndexLink}"/>
+                    <h:link outcome="/home" value="Inicio"/>
             </h:form>
         </ui:define>
     </ui:composition>

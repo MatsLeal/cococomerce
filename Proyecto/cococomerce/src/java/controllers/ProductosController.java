@@ -24,6 +24,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import jpa.entities.Productos;
+import jpa.entities.Usuario;
 
 
 import org.primefaces.model.UploadedFile;
@@ -54,6 +55,46 @@ public class ProductosController implements Serializable {
     }
     
     
+    public void pedir(java.lang.Integer id, java.lang.Integer itemid){
+        
+        Connection conn = con.Conectar();
+        
+        String sql = "INSERT INTO producto_pedido (id_donante,id_solicitante,ganador,fecha_pedido,id_producto) values "
+                + "( ?,?, -1 ,  CURDATE() , ?  )";
+        
+        try {
+            
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            
+            stmt.setInt(1, id);
+            
+            stmt.setInt( 2 ,getUser().getId()  );
+            
+            stmt.setInt(3, itemid);
+            
+            stmt.executeUpdate();
+            
+            
+            
+            
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+    }
+    
+    
+    public Usuario getUser(){
+            
+        
+            return  (Usuario) FacesContext.getCurrentInstance().getExternalContext()
+                .getSessionMap().get("user");
+    
+    }
     
     
     
@@ -224,6 +265,7 @@ public class ProductosController implements Serializable {
         }
     }
 
+    
     public DataModel getItems() {
         if (items == null) {
             items = getPagination().createPageDataModel();

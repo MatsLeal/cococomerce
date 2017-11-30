@@ -76,11 +76,12 @@
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{productosController.prepareView}" value="#{bundle.ListProductosViewLink}"/>
+                            
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{productosController.prepareEdit}" value="#{bundle.ListProductosEditLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{productosController.destroy}" value="#{bundle.ListProductosDestroyLink}"/>
+                            
+                            <h:commandLink action="#{productosController.pedir(item.usuarioOfertor,item.id)}" value="Rolalo "/>
+                            
+                            
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>

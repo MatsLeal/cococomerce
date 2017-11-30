@@ -19,10 +19,10 @@
                     
                     <h:outputLabel value="Nombre de usuario" for="usuario" />
                     <h:inputText id="usuario" value="#{usuarioController.selected.usuario}" title="#{bundle.CreateUsuarioTitle_usuario}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_usuario}"/>
-                    <h:outputLabel value="Clave" for="clave" />
-                    <h:inputText id="clave" value="#{usuarioController.selected.clave}" title="#{bundle.CreateUsuarioTitle_clave}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_clave}"/>
-                    <h:outputLabel value="Correo" for="correo" />
-                    <h:inputText id="correo" value="#{usuarioController.selected.correo}" title="#{bundle.CreateUsuarioTitle_correo}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_correo}"/>
+                    <h:outputLabel value="Correo" for="clave" />
+                    <h:inputText id="clave" value="#{usuarioController.selected.correo}" title="#{bundle.CreateUsuarioTitle_correo}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_clave}"/>
+                    <h:outputLabel value="Clave" for="correo" />
+                    <h:inputText id="correo" value="#{usuarioController.selected.clave}" title="#{bundle.CreateUsuarioTitle_clave}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_correo}"/>
                 </h:panelGrid>
                 <br />
                 <h:commandButton action="#{usuarioController.create}" value="Registrame" />

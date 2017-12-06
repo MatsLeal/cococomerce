@@ -17,8 +17,18 @@ import jpa.entities.ProductoPedido;
 @Stateless
 public class ProductoPedidoFacade extends AbstractFacade<ProductoPedido> {
 
+    
+    
+    
     @PersistenceContext(unitName = "cococomercePU")
     private EntityManager em;
+    
+    
+    
+    public EntityManager getEm(){
+        return em;
+    }
+    
 
     @Override
     protected EntityManager getEntityManager() {

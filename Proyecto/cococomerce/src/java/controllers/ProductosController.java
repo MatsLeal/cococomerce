@@ -23,6 +23,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.persistence.TypedQuery;
 import jpa.entities.Productos;
 import jpa.entities.Usuario;
 
@@ -41,6 +42,7 @@ public class ProductosController implements Serializable {
     private int selectedItemIndex;
     
     
+    
     private ConexionSQL con = new ConexionSQL(); //CONEXION A LA BASE
     
     
@@ -53,6 +55,19 @@ public class ProductosController implements Serializable {
     public void setImagen(UploadedFile imagen) {
         this.imagen = imagen;
     }
+    
+    
+    
+    public String getProductoNombre(java.lang.Integer idproducto){
+        
+        TypedQuery<Productos> query = this.ejbFacade.getEm().createNamedQuery("Productos.findById",Productos.class);
+        query.setParameter("id",idproducto);
+        
+        return query.getSingleResult().getNombre();
+        
+        
+    }
+    
     
     
     public void pedir(java.lang.Integer id, java.lang.Integer itemid){

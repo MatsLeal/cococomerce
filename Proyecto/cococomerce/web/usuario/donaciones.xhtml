@@ -5,10 +5,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       >
-     <ui:composition template="/template.xhtml">
+         <ui:composition template="/template.xhtml">
          
           <ui:define name="title">
-            <h:outputText value="Mis productos"></h:outputText>
+            <h:outputText value="Donaciones hechas"></h:outputText>
         </ui:define>
          
          
@@ -21,36 +21,45 @@
             
         <h:commandButton action="#{usuarioController.logout()}" value="Cerrar sesion"/>
         
+        
+        
+        
         <h:link outcome="/home" value="Inicio"  />
         
-        
-        
         <br/>
         <br/>
         
         
             
             
-        <h:dataTable value="#{usuarioController.productosusuario}" var="producto">
+        <h:dataTable value="#{usuarioController.donados}" var="donado">
     <h:column>
         <f:facet name="header">
-            <h:outputText value="ID" />
+            <h:outputText value="Numero de solicitud" />
         </f:facet>
-        <h:outputText value="#{producto.id}" />
+        <h:outputText value="#{donado.idPedido}" />
     </h:column>
 
     <h:column>
         <f:facet name="header">
-            <h:outputText value="Name" />
+            <h:outputText value="Solicitante" />
         </f:facet>
-        <h:outputText value="#{producto.nombre}" />
+        <h:outputText value="#{usuarioController.getNombreUsuario(donado.idSolicitante)}" />
     </h:column>
 
     <h:column>
         <f:facet name="header">
-            <h:outputText value="Descripcion" />
+            <h:outputText value="Fecha solictado" />
         </f:facet>
-        <h:outputText value="#{producto.descripcion}" />
+        <h:outputText value="#{donado.fechaPedido}" />
+    </h:column>
+            
+            
+   <h:column>
+        <f:facet name="header">
+            <h:outputText value="Producto " />
+        </f:facet>
+       <h:outputText value="#{productosController.getProductoNombre(donado.idProducto)}" />
     </h:column>
             
             
@@ -63,6 +72,7 @@
          </ui:define>
          
     </ui:composition>
-    
+
 </html>
+
 

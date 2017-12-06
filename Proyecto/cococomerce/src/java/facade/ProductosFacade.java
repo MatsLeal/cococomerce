@@ -21,6 +21,8 @@ public class ProductosFacade extends AbstractFacade<Productos> {
     @PersistenceContext(unitName = "cococomercePU")
     private EntityManager em;
     
+    
+    
     public EntityManager getEm(){
     
         

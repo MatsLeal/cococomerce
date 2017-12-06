@@ -21,6 +21,7 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import jpa.entities.ProductoPedido;
 import jpa.entities.Productos;
 import jpa.entities.Usuario;
 
@@ -29,34 +30,7 @@ import jpa.entities.Usuario;
 public class UsuarioController implements Serializable {
 
     
-    public Usuario getUser(){
-            
-        
-            return  (Usuario) FacesContext.getCurrentInstance().getExternalContext()
-                .getSessionMap().get("user");
-    
-    }
-    
-    public List<Productos> getProductosusuario() {
-        
-         if (FacesContext.getCurrentInstance().getRenderResponse()) {
-            this.setProductosusuario();// Reload to get most recent data.
-        }
-       
-        return productosusuario;
-    }
-
-    public void setProductosusuario() {
-    
-        
-        TypedQuery<Productos> query = this.productosejbFacade.getEm().createNamedQuery("Productos.findByUsuarioOfertor",Productos.class);
-        
-        query.setParameter("usuarioOfertor", getUser().getId().toString());
-        
-        this.productosusuario = query.getResultList(); 
-        
-        
-    }
+ 
 
     
     private List<Productos> productosusuario;
@@ -68,11 +42,80 @@ public class UsuarioController implements Serializable {
     private facade.UsuarioFacade ejbFacade;
     @EJB
     private facade.ProductosFacade productosejbFacade;
+    @EJB
+    private facade.ProductoPedidoFacade productopedidoFacade;
+    
     
     private PaginationHelper pagination;
     private int selectedItemIndex;
     
+    private List<ProductoPedido> solicitudes;
+    
+    private List<ProductoPedido> donados;
+    
+    private List<ProductoPedido> wishlist;
 
+    private List<ProductoPedido> disponibles;
+
+    public List<Productos> getDisponibles() {
+        
+        TypedQuery<Productos> query = this.productopedidoFacade.getEm().createNamedQuery("Productos.disponibles",Productos.class);
+        query.setParameter("idusuario",current.getId().toString());
+        
+        return query.getResultList();
+    }
+    
+    
+    public List<ProductoPedido> getWishlist() {
+        
+        TypedQuery<ProductoPedido> query = this.productopedidoFacade.getEm().createNamedQuery("ProductoPedido.wishlist",ProductoPedido.class);
+        query.setParameter("idsolicitante",current.getId());
+        
+        return query.getResultList();
+        
+    }
+    
+    
+
+    public List<ProductoPedido> getDonados() {
+        
+        TypedQuery<ProductoPedido> query = this.productopedidoFacade.getEm().createNamedQuery("ProductoPedido.donados",ProductoPedido.class);
+        query.setParameter("iddonante",current.getId());
+        
+        return query.getResultList();
+    }
+
+    
+    
+    
+    
+    
+    
+    public List<ProductoPedido> getSolicitudes() {
+        
+        TypedQuery<ProductoPedido>  query = this.productopedidoFacade.getEm().createNamedQuery("ProductoPedido.solicitudes",ProductoPedido.class);
+        
+        query.setParameter("iddonante",(int) current.getId() );
+        
+        return query.getResultList();
+    }
+    
+    
+    
+    public String getNombreUsuario(java.lang.Integer id){
+        
+        TypedQuery<Usuario>  query = this.productopedidoFacade.getEm().createNamedQuery("Usuario.findById",Usuario.class);
+        
+        query.setParameter("id", id );
+        
+        Usuario u = query.getSingleResult();
+        
+        return u.getCorreo();
+        
+        
+    }
+    
+    
     
     
     
@@ -105,6 +148,37 @@ public class UsuarioController implements Serializable {
             
     }
 
+    
+    
+       public Usuario getUser(){
+            
+        
+            return  (Usuario) FacesContext.getCurrentInstance().getExternalContext()
+                .getSessionMap().get("user");
+    
+    }
+    
+    public List<Productos> getProductosusuario() {
+        
+         if (FacesContext.getCurrentInstance().getRenderResponse()) {
+            this.setProductosusuario();// Reload to get most recent data.
+        }
+       
+        return productosusuario;
+    }
+
+    public void setProductosusuario() {
+    
+        
+        TypedQuery<Productos> query = this.productosejbFacade.getEm().createNamedQuery("Productos.findByUsuarioOfertor",Productos.class);
+        
+        query.setParameter("usuarioOfertor", getUser().getId().toString());
+        
+        this.productosusuario = query.getResultList(); 
+        
+        
+    }
+    
     public String productos(){
         
         this.setProductosusuario();

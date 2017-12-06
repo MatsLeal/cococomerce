@@ -35,7 +35,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "ProductoPedido.findByIdSolicitante", query = "SELECT p FROM ProductoPedido p WHERE p.idSolicitante = :idSolicitante")
     , @NamedQuery(name = "ProductoPedido.findByGanador", query = "SELECT p FROM ProductoPedido p WHERE p.ganador = :ganador")
     , @NamedQuery(name = "ProductoPedido.findByFechaPedido", query = "SELECT p FROM ProductoPedido p WHERE p.fechaPedido = :fechaPedido")
-    , @NamedQuery(name = "ProductoPedido.findByIdProducto", query = "SELECT p FROM ProductoPedido p WHERE p.idProducto = :idProducto")})
+    , @NamedQuery(name = "ProductoPedido.findByIdProducto", query = "SELECT p FROM ProductoPedido p WHERE p.idProducto = :idProducto")
+    , @NamedQuery(name = "ProductoPedido.asignaGanador", query="UPDATE ProductoPedido SET ganador=:idganador WHERE idPedido=:idpedido")
+    , @NamedQuery(name = "ProductoPedido.donados", query="SELECT p FROM ProductoPedido p WHERE p.idDonante=:iddonante and p.ganador !=-1" )
+    , @NamedQuery(name = "ProductoPedido.solicitudes", query="SELECT p FROM ProductoPedido p WHERE p.ganador=-1 and p.idDonante=:iddonante")    
+    , @NamedQuery(name = "ProductoPedido.wishlist", query="SELECT p FROM ProductoPedido p WHERE p.ganador=-1 and p.idDonante=:idsolicitante")
+}
+    
+)
 public class ProductoPedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,7 +62,7 @@ public class ProductoPedido implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ganador")
-    private boolean ganador;
+    private int ganador;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_pedido")
@@ -73,7 +80,7 @@ public class ProductoPedido implements Serializable {
         this.idPedido = idPedido;
     }
 
-    public ProductoPedido(Integer idPedido, int idDonante, int idSolicitante, boolean ganador, Date fechaPedido, int idProducto) {
+    public ProductoPedido(Integer idPedido, int idDonante, int idSolicitante, int ganador, Date fechaPedido, int idProducto) {
         this.idPedido = idPedido;
         this.idDonante = idDonante;
         this.idSolicitante = idSolicitante;
@@ -106,11 +113,11 @@ public class ProductoPedido implements Serializable {
         this.idSolicitante = idSolicitante;
     }
 
-    public boolean getGanador() {
+    public int getGanador() {
         return ganador;
     }
 
-    public void setGanador(boolean ganador) {
+    public void setGanador(int ganador) {
         this.ganador = ganador;
     }
 

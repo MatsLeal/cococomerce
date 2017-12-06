@@ -14,16 +14,21 @@
         
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
+                
+                        <h:commandButton action="#{usuarioController.logout()}" value="Cerrar sesion"/>
+        
+        
+                        <h:link outcome="/home" value="Inicio"  />
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-                <h:outputText escape="false" value="#{bundle.ListProductosEmpty}" rendered="#{productosController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{productosController.items.rowCount > 0}">
+                
+                <h:panelGroup >
                     
                     <h:outputText value="#{productosController.pagination.pageFirstItem + 1}..#{productosController.pagination.pageLastItem + 1}/#{productosController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{productosController.previous}" value="#{bundle.Previous} #{productosController.pagination.pageSize}" rendered="#{productosController.pagination.hasPreviousPage}"/>&nbsp;
                     <h:commandLink action="#{productosController.next}" value="#{bundle.Next} #{productosController.pagination.pageSize}" rendered="#{productosController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{productosController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                    <h:dataTable value="#{usuarioController.disponibles}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListProductosTitle_id}"/>
@@ -44,33 +49,16 @@
                         </h:column>
                         <h:column>
                             
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListProductosTitle_indiceimagen}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.indiceimagen}"/>
-                            
-                            <!--<img src="/images/#{item.id} "/>-->
                             
                         </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListProductosTitle_bloqueada}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.bloqueada}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListProductosTitle_fechaUpdateProducto}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.fechaUpdateProducto}">
-                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                            </h:outputText>
-                        </h:column>
+                        
+                        
+                        
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListProductosTitle_usuarioOfertor}"/>
                             </f:facet>
-                            <h:outputText value="#{item.usuarioOfertor}"/>
+                            <h:outputText value="#{usuarioController.getNombreUsuario(item.usuarioOfertor)}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">

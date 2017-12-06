@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Productos.findByFechaUpdateProducto", query = "SELECT p FROM Productos p WHERE p.fechaUpdateProducto = :fechaUpdateProducto")
     , @NamedQuery(name = "Productos.findByUsuarioOfertor", query = "SELECT p FROM Productos p WHERE p.usuarioOfertor = :usuarioOfertor")
     , @NamedQuery( name= "Productos.findImageById",query=" SELECT p FROM Productos p WHERE p.id=:id ")
+    , @NamedQuery(name = "Productos.disponibles", query="SELECT p FROM Productos p WHERE p.usuarioOfertor != :idusuario")    
 })
 public class Productos implements Serializable {
 

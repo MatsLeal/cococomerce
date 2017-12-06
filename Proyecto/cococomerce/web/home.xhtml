@@ -2,20 +2,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
+    
     <h:head>
         <title>Home</title>
     </h:head>
+    
     <h:body>
         <h:form rendered="#{usuarioController.isLogged()}">
             
         Hello <h:outputLabel value="#{usuarioController.selected.usuario}" />
         
         <h:commandButton action="#{usuarioController.logout()}" value="Cerrar sesion"/>
-        
+        <br />
         <h:link outcome="/productos/Create" value="Agregar productos"/>
-        
+        <br />
         
         <h:link outcome="/usuario/productos" value="Mis productos"/>
+        <br />
+        <h:link outcome="/usuario/peticiones" value="Mis Peticiones de donacion"/>
+        <br />
+        <h:link outcome="/usuario/donaciones" value="Productos Donados"/>
+        <br />
+        <h:link outcome="/usuario/solicitudes" value="WishList"/>
+        <br />
+        <h:link outcome="/productos/List" value="Ver productos"/>
         
         
         </h:form>

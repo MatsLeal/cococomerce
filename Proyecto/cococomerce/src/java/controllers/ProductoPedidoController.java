@@ -5,6 +5,7 @@ import jpa.entities.util.PaginationHelper;
 import facade.ProductoPedidoFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -16,7 +17,12 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import jpa.entities.ProductoPedido;
+import jpa.entities.Usuario;
 
 @Named("productoPedidoController")
 @SessionScoped
@@ -30,6 +36,35 @@ public class ProductoPedidoController implements Serializable {
     private int selectedItemIndex;
 
     public ProductoPedidoController() {
+        
+    }
+    
+    
+    
+    @Transactional
+    public String confirmarPedido(java.lang.Integer idpedido , java.lang.Integer idganador){
+        Query query = this.ejbFacade.getEm().createNamedQuery("ProductoPedido.asignaGanador");
+        query.setParameter("idganador",(int) idganador);
+        query.setParameter("idpedido", idpedido);
+        query.executeUpdate();
+        
+        return "/usuario/peticiones";
+    }
+    
+    
+    
+    public List<ProductoPedido> getSolicitudes(Usuario usuario){
+        
+
+        
+        TypedQuery<ProductoPedido>  query = this.ejbFacade.getEm().createNamedQuery("ProductoPedido.findByIdDonante",ProductoPedido.class);
+        
+         
+        query.setParameter("idDonante",(int) usuario.getId() );
+        
+        return query.getResultList();
+        
+        
     }
 
     public ProductoPedido getSelected() {
